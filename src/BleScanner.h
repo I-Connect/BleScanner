@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Arduino.h"
 #include <string>
 #include <NimBLEDevice.h>
 #include "BleInterfaces.h"
