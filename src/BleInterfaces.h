@@ -1,13 +1,18 @@
 #pragma once
 #include <NimBLEDevice.h>
 
-class BLEScannerSubscriber {
+namespace BleScanner {
+
+
+class Subscriber {
   public:
     virtual void onResult(NimBLEAdvertisedDevice* advertisedDevice) = 0;
 };
 
-class BLEScannerPublisher {
+class Publisher {
   public:
-    virtual void subscribe(BLEScannerSubscriber* subscriber) = 0;
-    virtual void unsubscribe(BLEScannerSubscriber* subscriber) = 0;
+    virtual void subscribe(Subscriber* subscriber) = 0;
+    virtual void unsubscribe(Subscriber* subscriber) = 0;
 };
+
+} // namespace BleScanner

@@ -3,11 +3,13 @@
 #include <NimBLEScan.h>
 #include <NimBLEAdvertisedDevice.h>
 
-BleScanner::BleScanner(int reservedSubscribers) {
+namespace BleScanner {
+
+Scanner::Scanner(int reservedSubscribers) {
   subscribers.reserve(reservedSubscribers);
 }
 
-void BleScanner::initialize(const std::string& deviceName, const bool wantDuplicates, const uint16_t interval, const uint16_t window) {
+void Scanner::initialize(const std::string& deviceName, const bool wantDuplicates, const uint16_t interval, const uint16_t window) {
   if (!BLEDevice::getInitialized()) {
     BLEDevice::init(deviceName);
   }
@@ -19,7 +21,7 @@ void BleScanner::initialize(const std::string& deviceName, const bool wantDuplic
   bleScan->setWindow(window);
 }
 
-void BleScanner::update() {
+void Scanner::update() {
   if (bleScan->isScanning()) {
     return;
   }
@@ -29,27 +31,28 @@ void BleScanner::update() {
   }
 }
 
-void BleScanner::setScanDuration(const uint32_t value) {
+void Scanner::setScanDuration(const uint32_t value) {
   scanDuration = value;
 }
 
-void BleScanner::subscribe(BLEScannerSubscriber* subscriber) {
+void Scanner::subscribe(Subscriber* subscriber) {
   if (std::find(subscribers.begin(), subscribers.end(), subscriber) != subscribers.end()) {
     return;
   }
   subscribers.push_back(subscriber);
 }
 
-void BleScanner::unsubscribe(BLEScannerSubscriber* subscriber) {
+void Scanner::unsubscribe(Subscriber* subscriber) {
   auto it = std::find(subscribers.begin(), subscribers.end(), subscriber);
   if (it != subscribers.end()) {
     subscribers.erase(it);
   }
 }
 
-void BleScanner::onResult(NimBLEAdvertisedDevice* advertisedDevice) {
+void Scanner::onResult(NimBLEAdvertisedDevice* advertisedDevice) {
   for (const auto& subscriber : subscribers) {
     subscriber->onResult(advertisedDevice);
   }
 }
 
+} // namespace BleScanner
