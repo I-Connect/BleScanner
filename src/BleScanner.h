@@ -10,7 +10,7 @@ class BleScanner : public BLEScannerPublisher, BLEAdvertisedDeviceCallbacks {
     BleScanner(int reservedSubscribers = 10);
     ~BleScanner() = default;
 
-    void initialize(const std::string& deviceName = "blescanner", const bool wantDuplicates = false, const uint16_t interval = 40, const uint16_t window = 40);
+    void initialize(const std::string& deviceName = "blescanner", const bool wantDuplicates = false, const uint16_t interval = 23, const uint16_t window = 23);
     void update();
     void setScanDuration(const uint32_t value);
 
