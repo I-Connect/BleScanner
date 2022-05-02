@@ -16,7 +16,6 @@ void Scanner::initialize(const std::string& deviceName, const bool wantDuplicate
   bleScan = BLEDevice::getScan();
   bleScan->setAdvertisedDeviceCallbacks(this, wantDuplicates);
   bleScan->setActiveScan(true);
-  bleScan->setDuplicateFilter(false);
   bleScan->setInterval(interval);
   bleScan->setWindow(window);
 }
