@@ -1,4 +1,16 @@
 #pragma once
+
+/**
+ * @file BleInterfaces.h
+ *
+ * Created: 2022
+ * License: GNU GENERAL PUBLIC LICENSE (see LICENSE)
+ *
+ * This library provides a BLE scanner to be used by other libraries to
+ * receive advertisements from BLE devices
+ *
+ */
+
 #include <NimBLEDevice.h>
 
 namespace BleScanner {

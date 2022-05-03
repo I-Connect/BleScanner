@@ -1,3 +1,14 @@
+/**
+ * @file BleScanner.cpp
+ *
+ * Created: 2022
+ * License: GNU GENERAL PUBLIC LICENSE (see LICENSE)
+ *
+ * This library provides a BLE scanner to be used by other libraries to
+ * receive advertisements from BLE devices
+ *
+ */
+
 #include "BleScanner.h"
 #include <NimBLEUtils.h>
 #include <NimBLEScan.h>
