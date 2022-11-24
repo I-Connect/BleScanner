@@ -77,7 +77,7 @@ class Scanner : public Publisher, BLEAdvertisedDeviceCallbacks {
     void onResult(NimBLEAdvertisedDevice* advertisedDevice) override;
 
   private:
-    uint32_t scanDuration = 3;
+    uint32_t scanDuration = 0; //default indefinite scanning time
     BLEScan* bleScan = nullptr;
     std::vector<Subscriber*> subscribers;
     uint16_t scanErrors = 0;
