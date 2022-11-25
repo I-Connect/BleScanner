@@ -22,19 +22,26 @@ Scanner::Scanner(int reservedSubscribers) {
 
 void Scanner::initialize(const std::string& deviceName, const bool wantDuplicates, const uint16_t interval, const uint16_t window) {
   if (!BLEDevice::getInitialized()) {
+    if (wantDuplicates) {
+      // reduce memory footprint, cache is not used anyway
+      NimBLEDevice::setScanDuplicateCacheSize(10);
+    }
     BLEDevice::init(deviceName);
   }
   bleScan = BLEDevice::getScan();
   bleScan->setAdvertisedDeviceCallbacks(this, wantDuplicates);
-  bleScan->setActiveScan(true);
   bleScan->setInterval(interval);
   bleScan->setWindow(window);
-  bleScan->setMaxResults(0);
 }
 
 void Scanner::update() {
   if (!scanningEnabled || bleScan->isScanning()) {
     return;
+  }
+
+  if (scanDuration == 0) {
+    // Avoid unbridled growth of results vector
+    bleScan->setMaxResults(0);
   }
 
   bool result = bleScan->start(scanDuration, nullptr, false);
