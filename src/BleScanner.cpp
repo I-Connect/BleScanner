@@ -35,13 +35,12 @@ void Scanner::initialize(const std::string& deviceName, const bool wantDuplicate
 }
 
 void Scanner::update() {
+  //clear results to prevent unbridled growth of results vector
+  //if merged in main to test with Nuki and enocean
+  bleScan->clearResults();
+
   if (!scanningEnabled || bleScan->isScanning()) {
     return;
-  }
-
-  if (scanDuration == 0) {
-    // Avoid unbridled growth of results vector
-    bleScan->setMaxResults(0);
   }
 
   bool result = bleScan->start(scanDuration, nullptr, false);
