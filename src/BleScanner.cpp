@@ -42,6 +42,8 @@ void Scanner::update() {
   if (scanDuration == 0) {
     // Avoid unbridled growth of results vector
     bleScan->setMaxResults(0);
+  } else {
+    log_w("Ble scanner max results not 0. Be aware of memory issue due to unbridled growth of results vector");
   }
 
   bool result = bleScan->start(scanDuration, nullptr, false);
