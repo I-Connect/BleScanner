@@ -56,6 +56,33 @@ class Scanner : public Publisher, BLEAdvertisedDeviceCallbacks {
     void enableScanning(bool enable);
 
     /**
+     * @brief Add BLE mac address to whitelist
+     *
+     * @param bleAddress
+     */
+    void addAddressToWhitelist(BLEAddress bleAddress) override;
+
+    /**
+         * @brief Add BLE mac address to whitelist
+         *
+         * @param bleAddress
+         */
+    void addAddressToWhitelist(std::string bleAddress);
+    /**
+     * @brief Remove BLE mac address to whitelist
+     *
+     * @param bleAddress
+     */
+    void removeAddressFromWhitelist(BLEAddress bleAddress) override;
+
+    /**
+         * @brief Enable whitelist filter
+         *
+         * @param enable
+         */
+    void enableWhitelist(bool enable) override;
+
+    /**
      * @brief Subscribe to the scanner and receive results
      *
      * @param subscriber
@@ -82,6 +109,7 @@ class Scanner : public Publisher, BLEAdvertisedDeviceCallbacks {
     std::vector<Subscriber*> subscribers;
     uint16_t scanErrors = 0;
     bool scanningEnabled = true;
+    bool whitelistEnabled = false;
 };
 
 } // namespace BleScanner
