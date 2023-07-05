@@ -47,12 +47,12 @@ void Scanner::update() {
   }
 
   bool result = bleScan->start(scanDuration, nullptr, false);
-  if (!result) {
-    scanErrors++;
-    if (scanErrors % 100 == 0) {
-      log_w("BLE Scan error (100x)");
-    }
-  }
+  // if (!result) {
+  //   scanErrors++;
+  //   if (scanErrors % 100 == 0) {
+  //     log_w("BLE Scan error (100x)");
+  //   }
+  // }
 }
 
 void Scanner::enableScanning(bool enable) {
