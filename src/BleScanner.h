@@ -22,7 +22,7 @@
 
 namespace BleScanner {
 
-class Scanner : public Publisher, BLEAdvertisedDeviceCallbacks {
+class Scanner : public Publisher, NimBLEScanCallbacks {
   public:
     Scanner(int reservedSubscribers = 10);
     ~Scanner() = default;
@@ -83,11 +83,11 @@ class Scanner : public Publisher, BLEAdvertisedDeviceCallbacks {
      *
      * @param advertisedDevice
      */
-    void onResult(NimBLEAdvertisedDevice* advertisedDevice) override;
+    void onResult(const NimBLEAdvertisedDevice* advertisedDevice) override;
 
   private:
     uint32_t scanDuration = 0; //default indefinite scanning time
-    BLEScan* bleScan = nullptr;
+    NimBLEScan* bleScan = nullptr;
     std::vector<Subscriber*> subscribers;
     uint16_t scanErrors = 0;
     bool scanningEnabled = true;

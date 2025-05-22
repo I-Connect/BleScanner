@@ -21,7 +21,7 @@ Scanner::Scanner(int reservedSubscribers) {
 }
 
 void Scanner::initialize(const std::string& deviceName, const bool wantDuplicates, const uint16_t interval, const uint16_t window) {
-  if (!BLEDevice::getInitialized()) {
+  if (!BLEDevice::isInitialized()) {
     if (wantDuplicates) {
       // reduce memory footprint, cache is not used anyway
       NimBLEDevice::setScanDuplicateCacheSize(10);
@@ -29,7 +29,7 @@ void Scanner::initialize(const std::string& deviceName, const bool wantDuplicate
     BLEDevice::init(deviceName);
   }
   bleScan = BLEDevice::getScan();
-  bleScan->setAdvertisedDeviceCallbacks(this, wantDuplicates);
+  bleScan->setScanCallbacks(this, wantDuplicates);
   bleScan->setInterval(interval);
   bleScan->setWindow(window);
 }
@@ -39,14 +39,9 @@ void Scanner::update() {
     return;
   }
 
-  if (scanDuration == 0) {
-    // Avoid unbridled growth of results vector
-    bleScan->setMaxResults(0);
-  } else {
-    log_w("Ble scanner max results not 0. Be aware of memory issue due to unbridled growth of results vector");
-  }
+  bleScan->setMaxResults(0);
 
-  bool result = bleScan->start(scanDuration, nullptr, false);
+  NimBLEScanResults result = bleScan->getResults(scanDuration * 1000, false);
   // if (!result) {
   //   scanErrors++;
   //   if (scanErrors % 100 == 0) {
@@ -80,7 +75,7 @@ void Scanner::unsubscribe(Subscriber* subscriber) {
   }
 }
 
-void Scanner::onResult(NimBLEAdvertisedDevice* advertisedDevice) {
+void Scanner::onResult(const NimBLEAdvertisedDevice* advertisedDevice) {
   for (const auto& subscriber : subscribers) {
     subscriber->onResult(advertisedDevice);
   }
