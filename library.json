@@ -16,6 +16,9 @@
   "platforms": [
     "espressif32"
   ],
+  "build": {
+    "srcFilter": ["+<*>", "-<main.cpp>", "-<examples/*>"]
+  },
   "dependencies": [
     {
       "name": "NimBLE-Arduino",
